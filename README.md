@@ -1,4 +1,4 @@
-# rusty-kotlin
+# rusty-kotlin [![Release](https://jitpack.io/v/kabiiQ/rusty-kotlin.svg)](https://jitpack.io/#moe.kabii/rusty-kotlin)
 
 Small library of simple functional-esque structures: Option, Result, Try, Either. 
 
