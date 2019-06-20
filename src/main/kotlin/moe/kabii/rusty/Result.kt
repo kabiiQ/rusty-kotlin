@@ -12,7 +12,6 @@ class Ok<T: Any>(val value: T): Result<T, Nothing>()
 open class Err<E: Any>(val value: E): Result<Nothing, E>()
 
 class ThrowableErr(value: Throwable): Err<Throwable>(value)
-object GenericErr : Err<Unit>(Unit)
 
 /**
  * A container representing either an Ok(T) or an Err(E) value.
@@ -80,5 +79,13 @@ sealed class Result<out T: Any, out E: Any> {
     fun <R> flatMap(mapperOk: (T) -> R, mapperErr: (E) -> R): R = when(this) {
         is Ok -> mapperOk(value)
         is Err -> mapperErr(value)
+    }
+
+    /**
+     * @return Returns the inner value if this is an Ok, otherwise returns null.
+     */
+    fun orNull(): T? = when(this) {
+        is Ok -> value
+        is Err -> null
     }
 }
