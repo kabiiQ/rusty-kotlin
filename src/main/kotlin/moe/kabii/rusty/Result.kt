@@ -3,7 +3,7 @@ package moe.kabii.rusty
 /**
  *  A container representing a successful value.
  */
-class Ok<T: Any>(val value: T): Result<T, Nothing>()
+class Ok<T>(val value: T): Result<T, Nothing>()
 
 /**
  * A container repreesnting a failed value.
@@ -16,7 +16,7 @@ class ThrowableErr(value: Throwable): Err<Throwable>(value)
 /**
  * A container representing either an Ok(T) or an Err(E) value.
  */
-sealed class Result<out T: Any, out E: Any> {
+sealed class Result<out T, out E: Any> {
     /**
      * Returns whether this Result is an Ok.
      */
