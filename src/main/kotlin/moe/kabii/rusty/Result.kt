@@ -55,7 +55,7 @@ sealed class Result<out T, out E: Any> {
      * @param mapper Mapper function (T) -> Any to apply to the inner value if this is an Ok.
      * @return A Result as either the original Err or as an Ok with the inner value mapped.
      */
-    fun <R: Any> mapOk(mapper: (T) -> R): Result<R, E> = when(this) {
+    fun <R> mapOk(mapper: (T) -> R): Result<R, E> = when(this) {
         is Ok -> Ok(mapper(value))
         is Err -> this
     }
