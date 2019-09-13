@@ -45,9 +45,9 @@ sealed class Result<out T, out E: Any> {
     /**
      * @param fn Function to be executed if this Result is an Err.
      */
-    fun ifErr(fn: () -> Unit) {
+    fun ifErr(fn: (err: E) -> Unit) {
         if(this is Err) {
-            fn()
+            fn(value)
         }
     }
 
