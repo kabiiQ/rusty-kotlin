@@ -1,19 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins {
-    kotlin("jvm") version "1.3.31"
-    maven
-}
-
 group = "moe.kabii"
-version = "1.0"
+version = "1.1"
+
+plugins {
+    kotlin("jvm") version "1.3.40"
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    api(kotlin("stdlib-jdk8"))
 }
 
 tasks.withType<KotlinCompile> {
