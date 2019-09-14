@@ -62,12 +62,11 @@ sealed class Result<out T, out E: Any> {
 
     /**
      * @param predicate Function (T)->Boolean to test the inner value against, if this is an Ok.
-     * @param err Err to return if the Ok does not fufill the predicate or if this Result was an Err.
-     * @return An Ok if this was an Ok AND the inner value fulfills the predicate function, otherwise returns an Err with the provided value.
+     * @return The inner value if this was an Ok and the value satisified the provided predicate. If this was an Err or the value does not satisfy the predicate, this returns null.
      */
-    fun <ER: Any> filter(err: ER, predicate: (T) -> Boolean): Result<T, ER> = when(this) {
-        is Ok -> if(predicate(value)) this else Err(err)
-        is Err -> Err(err)
+    fun filter(predicate: (T) -> Boolean): T? = when(this) {
+        is Ok -> if(predicate(value)) value else null
+        is Err -> null
     }
 
     /**
@@ -76,7 +75,7 @@ sealed class Result<out T, out E: Any> {
      * @param mapperErr Mapper function applied to the inner value if this Result is an Err.
      * @return Returns a value from the applicable mapper function.
      */
-    fun <R> flatMap(mapperOk: (T) -> R, mapperErr: (E) -> R): R = when(this) {
+    fun <R> biMap(mapperOk: (T) -> R, mapperErr: (E) -> R): R = when(this) {
         is Ok -> mapperOk(value)
         is Err -> mapperErr(value)
     }
