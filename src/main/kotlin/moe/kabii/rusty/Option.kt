@@ -3,17 +3,18 @@ package moe.kabii.rusty
 /**
  * Repreesnts a non-empty optional value.
  */
-class Some<T: Any>(val value: T): Opt<T>()
+class Some<T: Any>(val value: T): Option<T>()
 
 /**
  * Represents an empty optional value.
  */
-object None: Opt<Nothing>()
+object None: Option<Nothing>()
 
 /**
  * Represents an optional value.
  */
-sealed class Opt<out T: Any> {
+@Deprecated("Preferring to use nullable types for simplicity and compatibility with existing, idiomatic Kotlin code.")
+sealed class Option<out T: Any> {
     /**
      * returns whether this Opt is a Some(T).
      */
@@ -42,7 +43,7 @@ sealed class Opt<out T: Any> {
      * @param mapper Function (T) -> Any to apply to the inner value of the Some(T) if it is present.
      * @return Returns None if this Opt was a None. If this was a Some, then the mapper function is applied to the inner value T. If the function returns null, the map will return a None.
      */
-    fun <R : Any> map(mapper: (T) -> R?): Opt<R> = when(this) {
+    fun <R : Any> map(mapper: (T) -> R?): Option<R> = when(this) {
         is Some -> {
             val mapped = mapper(value)
             if(mapped != null) Some(mapped) else None
@@ -62,7 +63,7 @@ sealed class Opt<out T: Any> {
      * @param predicate Function (T) -> Boolean to apply to the inner value of the Some(T) if it is present
      * @return Some(T) if the Opt is a Some(T) and the filter applied to the inner value returns true, otherwise None
      */
-    fun filter(predicate: (T) -> Boolean): Opt<T> = if(this is Some && predicate(value)) this else None
+    fun filter(predicate: (T) -> Boolean): Option<T> = if(this is Some && predicate(value)) this else None
 
     /**
      * @param or The value to return if this Opt is a None`
